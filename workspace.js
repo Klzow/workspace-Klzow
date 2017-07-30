@@ -68,6 +68,8 @@ cpdefine("inline:com-chilipeppr-workspace-klzow", ["chilipeppr_ready"], function
                 setTimeout(function() { $(window).trigger('resize'); }, 100);
             });
             
+            this.load3DviewerWidget();
+            
             this.loadTemplateWidget();
             
             // Create our workspace upper right corner triangle menu
@@ -169,6 +171,28 @@ cpdefine("inline:com-chilipeppr-workspace-klzow", ["chilipeppr_ready"], function
                     });
                 }
             );
+        },
+        /**
+         * Load the 3D-viewer widget via chilipeppr.load()
+         */
+        load3DviewerWidget: function(callback) {
+            var that = this;
+            chilipeppr.load(
+  "#com-chilipeppr-widget-3Dviewer-instance",
+  "http://raw.githubusercontent.com/chilipeppr/widget-3dviewer/master/auto-generated-widget.html",
+  function() {
+    // Callback after widget loaded into #myDivWidget3dviewer
+    // Now use require.js to get reference to instantiated widget
+    cprequire(
+      ["inline:com-chilipeppr-widget-3dviewer"], // the id you gave your widget
+      function(myObjWidget3dviewer) {
+        // Callback that is passed reference to the newly loaded widget
+        console.log("Widget / 3D GCode Viewer just got loaded.", myObjWidget3dviewer);
+        myObjWidget3dviewer.init();
+      }
+    );
+  }
+);
         },
         /**
          * Load the Console widget via chilipeppr.load()
